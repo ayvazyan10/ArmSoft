@@ -143,7 +143,7 @@ class ArmSoft
      * @return array|null The PriceList, or null if not found.
      * @throws Exception If an error occurs while calling the ArmSoft API.
      */
-    final public function getPrices(string $date = null, string $mtcode = null, string $pricetypes = null): ?array
+    public function getPrices(string $date = null, string $mtcode = null, string $pricetypes = null): ?array
     {
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->accessToken,
