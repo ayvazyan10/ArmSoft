@@ -1,4 +1,4 @@
-## ArmSoft Laravel Package
+# ArmSoft Laravel Package
 This Laravel package allows you to interact with the ArmSoft API easily, providing methods for authentication and
 working with various endpoints such as Goods, GoodsRem, PriceList, DocumentsJournal, and MTBill.
 
