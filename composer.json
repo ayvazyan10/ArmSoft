@@ -41,7 +41,7 @@
                 "Ayvazyan10\\ArmSoft\\ArmSoftServiceProvider"
             ],
             "aliases": {
-                "ArmSoft": "ArmSoft"
+                "ArmSoft": "Ayvazyan10\\ArmSoft\\Facades\\ArmSoft"
             }
         }
     }
