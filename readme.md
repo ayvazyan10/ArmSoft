@@ -120,11 +120,12 @@ $armSoft = new ArmSoft();
 $goods = $armSoft->getGoods('2023-04-24');
 ````
 
-### 📖 Examples
+### 📖 Examples & Explanation
 
-Below are some examples of how you could use these methods with a Facade:
-
-### Example 1: Simple Payment
+Below are some examples of how you could use these methods with a Facade:<br><br>
+In this example, Armsoft is a Facade that allows you to access the Armsoft API using the methods provided by the
+ArmsoftClient class. The Facade is registered in the app.php config file and bound to the ArmsoftClient class using the
+Laravel service container.
 
 ``` php
 // In your controller or anywhere else
@@ -155,15 +156,61 @@ public function myMethod()
     ]);
 }
 ```
-
-In this example, Armsoft is a Facade that allows you to access the Armsoft API using the methods provided by the
-ArmsoftClient class. The Facade is registered in the app.php config file and bound to the ArmsoftClient class using the
-Laravel service container.
-
 You can use the Facade to call the getGoods(), getGoodsRem(), getPrices(), getDocumentsJournal(), getMTbill(), and
-setMTbill() methods provided by the ArmsoftClient class. You can pass in any necessary parameters to these methods, as
+setMTbill() methods provided by the Armsoft class. You can pass in any necessary parameters to these methods, as
 shown in the example above. If an error occurs while calling the API, the methods will throw an Exception with a
 descriptive error message.
+
+### Example with products import
+```` php
+    // in your controller or anywhere else
+    // in this example we using helper
+    /**
+     * Products Import from ArmSoft API.
+     *
+     * @throws Exception
+     */
+    public function importGoods()
+    {
+        $items = armsoft()->getGoods(now()->format('Y-m-d'));
+
+        if (count($items["rows"]) === 0) {
+            throw new Exception('ArmSoft API error: no products');
+        }
+
+        foreach ($items["rows"] as $key => $item) {
+            if (((int)$key + 1) % 2 === 0) {
+                continue;
+            }
+
+            $priceRequest = armsoft()->getPrices(null, $item["MTCode"], config('armsoft.PriceType', '02'));
+            $price = !empty(current($priceRequest["rows"])["Price"]) ? current($priceRequest["rows"])["Price"] : 0;
+
+            $stockRequest = armsoft()->getGoodsRem(null, $item["MTCode"]);
+            $stock = !empty(current($stockRequest["rows"])["Qty"]) ? current($stockRequest["rows"])["Qty"] : 0;
+
+            $productData = [
+                'armsoft_title' => $item["FullCaption"]    
+                'category_id' => $item["Group"],
+                'MTCode' => $item["MTCode"],
+                'discount' => $item["Discount"],
+                'stock' => intval($stock),
+                'price' => $price
+                // ... fields
+            ];
+
+            try {
+                YourModel::where('MTCode', $item["MTCode"])->updateOrCreate([
+                    'MTCode' => $item["MTCode"]
+                ], $productData);
+            } catch (Exception $e) {
+                return $e->getMessage();
+            }
+        }
+
+        return redirect()->back();
+    }
+````
 
 ### Detailed explanation of each method:
 
@@ -200,7 +247,7 @@ data to create a new invoice. The method returns the created MTBill object, or n
 try {
     $mtbill = ArmSoft::getMTbill('your_guid_here');
 } catch (Exception $e) {
-    echo 'Error: ' . $e->getMessage();
+    return $e->getMessage();
 }
 // Perform actions with $mtbill or $response data
 ````

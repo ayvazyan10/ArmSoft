@@ -2,6 +2,7 @@
 
 namespace Ayvazyan10\ArmSoft;
 
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
 class ArmSoftServiceProvider extends ServiceProvider
@@ -22,6 +23,9 @@ class ArmSoftServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
         }
+
+        $loader = AliasLoader::getInstance();
+        $loader->alias('ArmSoft', \Ayvazyan10\ArmSoft\Facades\ArmSoft::class);
     }
 
     /**
@@ -31,6 +35,8 @@ class ArmSoftServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        require_once __DIR__ . '/helper.php';
+
         $this->mergeConfigFrom(__DIR__.'/../config/armsoft.php', 'armsoft');
 
         // Register the service the package provides.
@@ -44,7 +50,7 @@ class ArmSoftServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function provides()
+    public function provides(): array
     {
         return ['armsoft'];
     }
