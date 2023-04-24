@@ -1,0 +1,41 @@
+{
+    "name": "ayvazyan10/armsoft",
+    "description": ":package_description",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Author Name",
+            "email": "author@email.com",
+            "homepage": "http://author.com"
+        }
+    ],
+    "homepage": "https://github.com/ayvazyan10/armsoft",
+    "keywords": ["Laravel", "ArmSoft"],
+    "require": {
+        "illuminate/support": "~9"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9.0",
+        "orchestra/testbench": "~7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ayvazyan10\\ArmSoft\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ayvazyan10\\ArmSoft\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ayvazyan10\\ArmSoft\\ArmSoftServiceProvider"
+            ],
+            "aliases": {
+                "ArmSoft": "Ayvazyan10\\ArmSoft\\Facades\\ArmSoft"
+            }
+        }
+    }
+}
