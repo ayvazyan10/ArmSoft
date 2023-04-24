@@ -26,7 +26,7 @@ composer require ayvazyan10/armsoft
 #### Release the configuration file and database migration.
 First, you need to configure the package with your ArmSoft API credentials. You can do this by publishing the configuration file:
 ```` bash
-php artisan vendor:publish --provider="Ayvazyan10\ArmSoft\ArmSoftServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Ayvazyan10\ArmSoft\ArmSoftServiceProvider"
 ````
 Then, fill in the config/armsoft.php file with your ArmSoft API credentials and settings.
 
