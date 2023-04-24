@@ -13,7 +13,7 @@ class ArmSoft
     private const GOODSREM_ENDPOINT = 'https://dbservices.armsoft.am/mobiletrade/api/Data/GoodsRems';
     private const PRICE_ENDPOINT = 'https://dbservices.armsoft.am/mobiletrade/api/Data/PriceList';
     private const MTBILL_ENDPOINT = 'https://dbservices.armsoft.am/mobiletrade/api/Documents/MTBill';
-    private const DOCUMENT_JOURNAL_ENDPOINT = 'https://dbservices.armsoft.am/mobiletrade/api/DocumentsJournal';
+    private const DOCUMENT_JOURNAL_ENDPOINT = 'https://dbservices.armsoft.am/mobiletrade/api/Data/DocumentsJournal';
 
     private mixed $accessToken;
     private mixed $accessTokenExpiresAt;
@@ -93,7 +93,7 @@ class ArmSoft
             ->post(self::GOODS_ENDPOINT, [
                 'settings' => config('armsoft.settings'),
                 'parameters' => [
-                    'RemDate' => $date ?? Carbon::now()->format('Y-m-d')
+                    'RemDate' => $date === null ? Carbon::now()->format('Y-m-d') : $date
                 ]
             ]);
 
@@ -122,7 +122,7 @@ class ArmSoft
             ->post(self::GOODSREM_ENDPOINT, [
                 'settings' => config('armsoft.settings'),
                 'parameters' => [
-                    'RemDate' => $date ?? Carbon::now()->format('Y-m-d'),
+                    'RemDate' => $date === null ? Carbon::now()->format('Y-m-d') :  $date,
                     'MTCode' => $mtcode
                 ]
             ]);
@@ -153,9 +153,9 @@ class ArmSoft
             ->post(self::PRICE_ENDPOINT, [
                 'settings' => config('armsoft.settings'),
                 'parameters' => [
-                    'Date' => $date ?? Carbon::now()->format('Y-m-d'),
+                    'Date' => $date === null ? Carbon::now()->format('Y-m-d') :  $date,
                     'MTCode' => $mtcode,
-                    "PriceTypes" => $pricetypes
+                    "PriceTypes" => $pricetypes === null ? config('armsoft.priceType', '02') : $pricetypes
                 ]
             ]);
 
@@ -184,8 +184,8 @@ class ArmSoft
             ->post(self::DOCUMENT_JOURNAL_ENDPOINT, [
                 'settings' => config('armsoft.settings'),
                 'parameters' => [
-                    "DateBegin" => $dateBegin,
-                    "DateEnd" => $dateEnd
+                    "DateBegin" => $dateBegin === null ? Carbon::now()->subYear()->format('Y-m-d') : $dateBegin,
+                    "DateEnd" => $dateEnd === null ? Carbon::now()->format('Y-m-d') :  $dateEnd
                 ]
             ]);
 
