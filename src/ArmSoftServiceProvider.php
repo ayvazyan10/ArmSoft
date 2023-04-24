@@ -4,6 +4,7 @@ namespace Ayvazyan10\ArmSoft;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Ayvazyan10\ArmSoft\Facades\ArmSoft as ArmSoftFacade;
 
 class ArmSoftServiceProvider extends ServiceProvider
 {
@@ -25,7 +26,7 @@ class ArmSoftServiceProvider extends ServiceProvider
         }
 
         $loader = AliasLoader::getInstance();
-        $loader->alias('ArmSoft', \Ayvazyan10\ArmSoft\Facades\ArmSoft::class);
+        $loader->alias('ArmSoft', ArmSoftFacade::class);
     }
 
     /**

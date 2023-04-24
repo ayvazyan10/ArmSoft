@@ -5,6 +5,6 @@ use Ayvazyan10\ArmSoft\ArmSoft;
 if (!function_exists('armsoft')) {
     function armsoft(): ArmSoft
     {
-        return app('armsoft');
+        return app('ArmSoft');
     }
 }

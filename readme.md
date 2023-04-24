@@ -120,11 +120,11 @@ $armSoft = new ArmSoft();
 $goods = $armSoft->getGoods('2023-04-24');
 ````
 
-### 📖 Examples & Explanation
+### 📖 Examples & Explanations
 
 Below are some examples of how you could use these methods with a Facade:<br><br>
 In this example, Armsoft is a Facade that allows you to access the Armsoft API using the methods provided by the
-ArmsoftClient class. The Facade is registered in the app.php config file and bound to the ArmsoftClient class using the
+Armsoft class. The Facade is registered in the app.php config file and bound to the Armsoft class using the
 Laravel service container.
 
 ``` php
